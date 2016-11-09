@@ -206,41 +206,42 @@ def start_again():
         os.system('clear')
 
 while True:
-        os.system('clear')
-        print(STORY)
-        start = time.time()
-
+    os.system('clear')
+    print(STORY)
+    start = time.time()
+    try:
         f = open('capitols', 'r')
         LIST_OF_PAIRS=[]
         for line in f:
             LIST_OF_PAIRS.append(line)
         f.close()
-        
-        pair_to_guess = random.choice(LIST_OF_PAIRS)
-        country, word_to_guess = pair_to_guess.strip().split(" | ")
-        word_to_guess = word_to_guess.upper()
+    except:
+        sys.exit("No file 'capitols' found with capitol and country pairs")
+    pair_to_guess = random.choice(LIST_OF_PAIRS)
+    country, word_to_guess = pair_to_guess.strip().split(" | ")
+    word_to_guess = word_to_guess.upper()
 
-        lives = 5
-        num = 0
-        full_answer = "" # variable with full answer input from player
+    lives = 5
+    num = 0
+    full_answer = "" # variable with full answer input from player
 
-        word_to_guess_letter_list = string_to_list(word_to_guess)# calls the
-        #function changing string to the list of letters
-        answer_from_letters = letter_to_dashes(word_to_guess)
-        # calls the function changing letters to dashes
-        show_dashes(answer_from_letters) #showing dashes instead of the correct answer
-        while word_to_guess_letter_list != answer_from_letters and full_answer != word_to_guess and lives > 0:
+    word_to_guess_letter_list = string_to_list(word_to_guess)# calls the
+    #function changing string to the list of letters
+    answer_from_letters = letter_to_dashes(word_to_guess)
+    # calls the function changing letters to dashes
+    show_dashes(answer_from_letters) #showing dashes instead of the correct answer
+    while word_to_guess_letter_list != answer_from_letters and full_answer != word_to_guess and lives > 0:
+        print()
+        next_step = input("Do you want to input letter [1], input all answer [2] or print exit to end the game: ") #we are choosing one from 3 options
+        if next_step == "1":
             print()
-            next_step = input("Do you want to input letter [1], input all answer [2] or print exit to end the game: ") #we are choosing one from 3 options
-            if next_step == "1":
-                print()
-                adding_letter(word_to_guess, answer_from_letters)
-            elif next_step == "2":
-                print()
-                entering_full_answer(word_to_guess)
-            elif next_step == "exit":
-                print()
-                sys.exit("Looser!")
+            adding_letter(word_to_guess, answer_from_letters)
+        elif next_step == "2":
+            print()
+            entering_full_answer(word_to_guess)
+        elif next_step == "exit":
+            print()
+            sys.exit("Looser!")
 
-        game_ending(full_answer, word_to_guess, word_to_guess_letter_list, answer_from_letters)
-        #while answer is incorrect or we loose all lives, game ends
+    game_ending(full_answer, word_to_guess, word_to_guess_letter_list, answer_from_letters)
+    #while answer is incorrect or we loose all lives, game ends
